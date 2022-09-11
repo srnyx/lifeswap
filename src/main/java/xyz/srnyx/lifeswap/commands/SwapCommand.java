@@ -11,7 +11,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import xyz.srnyx.lifeswap.Main;
-import xyz.srnyx.lifeswap.managers.SwapManager;
+import xyz.srnyx.lifeswap.SwapManager;
 
 import java.util.concurrent.TimeUnit;
 

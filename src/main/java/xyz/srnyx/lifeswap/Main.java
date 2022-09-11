@@ -8,7 +8,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import xyz.srnyx.lifeswap.commands.ResetCommand;
 import xyz.srnyx.lifeswap.commands.SwapCommand;
-import xyz.srnyx.lifeswap.listeners.*;
 
 
 public class Main extends JavaPlugin {

@@ -1,4 +1,4 @@
-package xyz.srnyx.lifeswap.managers;
+package xyz.srnyx.lifeswap;
 
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
