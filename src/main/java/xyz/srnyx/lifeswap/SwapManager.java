@@ -6,8 +6,6 @@ import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import xyz.srnyx.lifeswap.Main;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +15,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 
 public class SwapManager {
-    public static List<Player> swap = new ArrayList<>();
-    public static Map<UUID, Long> cooldowns = new ConcurrentHashMap<>();
-    public static List<Player> reset = new ArrayList<>();
+    public static final List<Player> swap = new ArrayList<>();
+    public static final Map<UUID, Long> cooldowns = new ConcurrentHashMap<>();
+    public static final List<Player> reset = new ArrayList<>();
 
     /**
      * Teleports {@code player} to {@code target}'s location and vice versa
