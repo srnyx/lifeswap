@@ -1,0 +1,25 @@
+name: LifeSwap
+author: srnyx
+description: A combination of LifeSteal and Death Swap.
+
+main: xyz.srnyx.lifeswap.Main
+version: ${version}
+api-version: 1.19
+
+commands:
+  reset:
+    description: "Command for resetting all players"
+    usage: "Usage: /<command>"
+    permission: lifeswap.reset
+  swap:
+    description: "Swaps players"
+    usage: "Usage: /<command> <player>"
+    permission: lifeswap.swap
+
+permissions:
+  lifeswap.reset:
+    description: "Allows you to use /reset"
+    default: op
+  lifeswap.swap:
+    description: "Allows you to use /swap"
+    default: op
