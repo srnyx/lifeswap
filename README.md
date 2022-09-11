@@ -10,7 +10,7 @@ Death swap except when you die it takes a heart from max health. *Made for [moth
 ## Permissions
 
 - `lifeswap.swap` - Allows usage of `/swap` (default: op)
-- `lifestea.reset` - Allows usage of `/reset` (default: op)
+- `lifeswap.reset` - Allows usage of `/reset` (default: op)
 
 ### Disclaimer
 
