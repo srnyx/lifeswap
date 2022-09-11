@@ -55,7 +55,7 @@ public class SwapManager {
                 if (swap.contains(player)) modifyHealth(player, 2);
                 if (swap.contains(target)) modifyHealth(target, 2);
             }
-        }.runTaskLater(Main.plugin, 100); // 600 = 30 seconds
+        }.runTaskLater(Main.plugin, 600);
     }
 
     /**
@@ -118,7 +118,7 @@ public class SwapManager {
     /**
      * Unbans all players and sets their max health to 20
      */
-    public void reset() {
+    public void resetGame() {
         swap.clear();
 
         // Unban all players

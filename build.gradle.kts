@@ -1,5 +1,5 @@
 description = "LifeSwap"
-version = "0.0.1"
+version = "1.0.0"
 group = "xyz.srnyx"
 
 repositories {

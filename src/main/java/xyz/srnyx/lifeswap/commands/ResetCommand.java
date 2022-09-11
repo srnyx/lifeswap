@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ResetCommand implements TabExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
-        new SwapManager().reset();
+        new SwapManager().resetGame();
         sender.sendMessage(ChatColor.GREEN + "Reset the game!");
         return true;
     }
