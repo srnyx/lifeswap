@@ -1,6 +1,6 @@
 # LifeSwap
 
-Death swap except when you die it takes a heart from max health.
+Death swap except when you die it takes a heart from max health. *Made for [mothlet](https://www.youtube.com/channel/UCXJe1zf6xUxcTjjBwQK068w), go check them out!*
 
 ## Commands
 
