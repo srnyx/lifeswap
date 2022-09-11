@@ -7,7 +7,7 @@ import org.bukkit.command.TabExecutor;
 
 import org.jetbrains.annotations.NotNull;
 
-import xyz.srnyx.lifeswap.managers.SwapManager;
+import xyz.srnyx.lifeswap.SwapManager;
 
 import java.util.Collections;
 import java.util.List;
