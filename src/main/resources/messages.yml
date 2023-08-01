@@ -1,0 +1,58 @@
+DOCUMENTATION: https://annoying-api.srnyx.com/wiki/messages-file
+
+
+# Messages for general plugin usage
+plugin:
+  # These are placeholders that can be used in any message in this file
+  # This is extremely useful for things like prefixes, color schemes, and more
+  # Using a global placeholder is just like any other placeholder! Simply surround the placeholder name with "%" (ex: "%prefix%")
+  # WARNING: Global placeholders can conflict with local placeholders! Please be wary when creating your own global placeholder(s)!
+  global-placeholders: # It's recommended to keep all the default global placeholders (prefix, p, s, pe, se)
+    prefix: "&6&lLIFESWAP &8&l| &e" # Prefix for the plugin, typically used in the beginning of most messages
+    p: "&e" # Base color for non-error messages
+    s: "&6" # Highlight color for non-error messages
+    pe: "&c" # Base color for error messages
+    se: "&4" # Highlight color for error messages
+
+  # These are the different splitters for messages/placeholders
+  splitters:
+    # This is the splitter for the JSON components. Default: "@@"
+    json: "@@"
+    # This is the splitter for placeholders with parameters. Default: "=="
+    placeholder: "=="
+
+  # Message sent in the console when an update for the plugin is available
+  update-available: "%pe%A new version of %se%%plugin%%pe% is available! | Current: %se%%current%%pe% | New: %se%%new%" # %plugin%, %current%, %new%
+
+# Error messages when a player does something wrong
+error:
+  # Player doesn't have permission to use a command
+  no-permission: "%prefix%%pe%You must have %se%%permission%%pe% to use this!@@%pe%%command%@@%command%" # %permission%
+  # Console tries to use a command that can only be used by players
+  player-only: "%prefix%%pe%You must be a player to run this command!@@%pe%%command%@@%command%"
+  # Command is used with an invalid/incorrect argument
+  invalid-argument: "%prefix%%se%%argument%%pe% is an invalid argument!@@%pe%%command%@@%command%" # %argument%
+  # Command is used with multiple invalid/incorrect arguments
+  invalid-arguments: "%prefix%%pe%Invalid arguments!@@%pe%%command%@@%command%"
+  # Command is used when it's disabled
+  disabled-command: "%prefix%%se%%command%%pe% is disabled!@@%pe%%command%@@%command%"
+
+test: "%prefix%This is a test message!"
+
+reset: "%prefix%&aReset the game!"
+
+health: "%prefix%%color1%Your max health is now %color2%%health%%color1%/20!"
+
+swap:
+  command:
+    already-in: "%prefix%%pe%You/they are already in a swap!@@%pe%%command%@@%command%"
+    cooldown: "%prefix%%pe%You/they can't swap for another %se%%cooldown==m%%pe% minutes!@@%pe%%command%@@%command%" # %cooldown==time%
+    success: "%s%&l! %p%Swapping with %s%%player%%p% in %s%5%p% seconds %s%&l!" # %player%
+  title: "%p%SWAPPED!"
+  message:
+    involved: "%prefix%%p%&lSWAPPED!"
+    others: "%prefix%%s%%player%%p% swapped with %s%%target%" # %player%, %target%
+
+death:
+  ban: "%p%You died!"
+  broadcast: "%prefix%%s%%player%%p% has died and been banned!" # %player%

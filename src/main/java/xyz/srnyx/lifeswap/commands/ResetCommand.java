@@ -1,26 +1,35 @@
 package xyz.srnyx.lifeswap.commands;
 
-import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabExecutor;
-
 import org.jetbrains.annotations.NotNull;
 
+import xyz.srnyx.annoyingapi.command.AnnoyingCommand;
+import xyz.srnyx.annoyingapi.command.AnnoyingSender;
+import xyz.srnyx.annoyingapi.message.AnnoyingMessage;
+
+import xyz.srnyx.lifeswap.LifeSwap;
 import xyz.srnyx.lifeswap.SwapManager;
 
-import java.util.Collections;
-import java.util.List;
 
+public class ResetCommand implements AnnoyingCommand {
+    @NotNull private final LifeSwap plugin;
 
-public class ResetCommand implements TabExecutor {
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
-        new SwapManager().resetGame();
-        sender.sendMessage(ChatColor.GREEN + "Reset the game!");
-        return true;
+    public ResetCommand(@NotNull LifeSwap plugin) {
+        this.plugin = plugin;
     }
 
-    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
-        return Collections.emptyList();
+    @Override @NotNull
+    public LifeSwap getAnnoyingPlugin() {
+        return plugin;
+    }
+
+    @Override @NotNull
+    public String getPermission() {
+        return "lifeswap.reset";
+    }
+
+    @Override
+    public void onCommand(@NotNull AnnoyingSender sender) {
+        new SwapManager(plugin).reset();
+        new AnnoyingMessage(plugin, "reset").send(sender);
     }
 }

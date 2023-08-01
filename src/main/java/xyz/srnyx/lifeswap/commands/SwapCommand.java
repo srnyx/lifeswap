@@ -1,69 +1,111 @@
 package xyz.srnyx.lifeswap.commands;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import org.jetbrains.annotations.NotNull;
 
-import xyz.srnyx.lifeswap.Main;
+import xyz.srnyx.annoyingapi.AnnoyingCooldown;
+import xyz.srnyx.annoyingapi.command.AnnoyingCommand;
+import xyz.srnyx.annoyingapi.command.AnnoyingSender;
+import xyz.srnyx.annoyingapi.message.AnnoyingMessage;
+import xyz.srnyx.annoyingapi.message.DefaultReplaceType;
+
+import xyz.srnyx.lifeswap.LifeSwap;
 import xyz.srnyx.lifeswap.SwapManager;
 
-import java.util.concurrent.TimeUnit;
+import java.util.function.Predicate;
 
 
-public class SwapCommand implements CommandExecutor {
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
-        // Not a player
-        if (!(sender instanceof Player player)) {
-            sender.sendMessage(ChatColor.RED + "You must be a player to use this command!");
-            return true;
-        }
+public class SwapCommand implements AnnoyingCommand {
+    @NotNull private final LifeSwap plugin;
 
-        // Invalid arguments
-        if (args.length != 1) return false;
+    public SwapCommand(@NotNull LifeSwap plugin) {
+        this.plugin = plugin;
+    }
 
-        // Invalid player
+    @Override @NotNull
+    public LifeSwap getAnnoyingPlugin() {
+        return plugin;
+    }
+
+    @Override @NotNull
+    public String getPermission() {
+        return "lifeswap.swap";
+    }
+
+    @Override
+    public boolean isPlayerOnly() {
+        return true;
+    }
+
+    @Override @NotNull
+    public Predicate<String[]> getArgsPredicate() {
+        return args -> args.length == 1;
+    }
+
+    @Override
+    public void onCommand(@NotNull AnnoyingSender sender) {
+        // Get target
+        final String[] args = sender.args;
         final Player target = Bukkit.getPlayer(args[0]);
         if (target == null) {
-            sender.sendMessage(ChatColor.DARK_RED + args[0] + ChatColor.RED + " is not a valid player!");
-            return true;
+            sender.invalidArgument(args[0]);
+            return;
+        }
+        final Player player = sender.getPlayer();
+
+        // Player/target already swapping
+        if (plugin.swapManager.swap.containsKey(player.getUniqueId()) || plugin.swapManager.swap.containsKey(target.getUniqueId())) {
+            new AnnoyingMessage(plugin, "swap.command.already-in").send(sender);
+            return;
         }
 
-        // Player already swapped
-        if (SwapManager.swap.contains(player) || SwapManager.swap.contains(target)) {
-            sender.sendMessage(ChatColor.RED + "You/target already swapped recently!");
-            return true;
+        // Player cooldown
+        final AnnoyingCooldown playerCooldown = new AnnoyingCooldown(plugin, player.getUniqueId(), SwapCooldown.SWAP);
+        if (playerCooldown.isOnCooldown()) {
+            new AnnoyingMessage(plugin, "swap.command.cooldown")
+                    .replace("%cooldown%", playerCooldown.getRemaining(), DefaultReplaceType.TIME)
+                    .send(sender);
+            return;
         }
 
-        // On cooldown
-        final Long cooldown = SwapManager.cooldowns.get(player.getUniqueId());
-        if (cooldown != null && cooldown - System.currentTimeMillis() > 0) {
-            final String message = ChatColor.translateAlternateColorCodes('&', "&cYou can't swap for another &4%time%&c minutes!");
-            sender.sendMessage(message.replace("%time%", String.valueOf(TimeUnit.MILLISECONDS.toMinutes(cooldown - System.currentTimeMillis()))));
-            return true;
+        // Target cooldown
+        final AnnoyingCooldown targetCooldown = new AnnoyingCooldown(plugin, target.getUniqueId(), SwapCooldown.SWAP);
+        if (targetCooldown.isOnCooldown()) {
+            new AnnoyingMessage(plugin, "swap.command.cooldown")
+                    .replace("%cooldown%", targetCooldown.getRemaining(), DefaultReplaceType.TIME)
+                    .send(sender);
+            return;
         }
 
         // Messages
-        final String message = ChatColor.translateAlternateColorCodes('&', "&4&l! &cSwapping with &4%player% &cin &45 &cseconds &4&l!");
-        player.sendMessage(message.replace("%player%", target.getName()));
-        target.sendMessage(message.replace("%player%", player.getName()));
+        new AnnoyingMessage(plugin, "swap.command.success")
+                .replace("%player%", target.getName())
+                .send(sender);
+        new AnnoyingMessage(plugin, "swap.command.success")
+                .replace("%player%", player.getName())
+                .send(target);
+
+        // Start cooldowns
+        playerCooldown.start();
+        targetCooldown.start();
 
         // Swap
         new BukkitRunnable() {
             public void run() {
-                new SwapManager().swapPlayers(player, target);
+                new SwapManager(plugin).swapPlayers(player, target);
             }
-        }.runTaskLater(Main.plugin, 100);
+        }.runTaskLater(plugin, 100);
+    }
 
-        // Cooldowns
-        SwapManager.cooldowns.put(player.getUniqueId(), System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(30));
-        SwapManager.cooldowns.put(target.getUniqueId(), System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(30));
+    public enum SwapCooldown implements AnnoyingCooldown.CooldownType {
+        SWAP;
 
-        return true;
+        @Override
+        public long getDuration() {
+            return 1800000L;
+        }
     }
 }
