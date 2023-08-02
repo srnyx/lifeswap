@@ -19,6 +19,8 @@ import java.util.function.Predicate;
 
 
 public class SwapCommand implements AnnoyingCommand {
+    @NotNull private static final AnnoyingCooldown.CooldownType COOLDOWN = () -> 1800000L;
+
     @NotNull private final LifeSwap plugin;
 
     public SwapCommand(@NotNull LifeSwap plugin) {
@@ -63,7 +65,7 @@ public class SwapCommand implements AnnoyingCommand {
         }
 
         // Player cooldown
-        final AnnoyingCooldown playerCooldown = new AnnoyingCooldown(plugin, player.getUniqueId(), SwapCooldown.SWAP);
+        final AnnoyingCooldown playerCooldown = new AnnoyingCooldown(plugin, player.getUniqueId(), COOLDOWN);
         if (playerCooldown.isOnCooldown()) {
             new AnnoyingMessage(plugin, "swap.command.cooldown")
                     .replace("%cooldown%", playerCooldown.getRemaining(), DefaultReplaceType.TIME)
@@ -72,7 +74,7 @@ public class SwapCommand implements AnnoyingCommand {
         }
 
         // Target cooldown
-        final AnnoyingCooldown targetCooldown = new AnnoyingCooldown(plugin, target.getUniqueId(), SwapCooldown.SWAP);
+        final AnnoyingCooldown targetCooldown = new AnnoyingCooldown(plugin, target.getUniqueId(), COOLDOWN);
         if (targetCooldown.isOnCooldown()) {
             new AnnoyingMessage(plugin, "swap.command.cooldown")
                     .replace("%cooldown%", targetCooldown.getRemaining(), DefaultReplaceType.TIME)
@@ -98,14 +100,5 @@ public class SwapCommand implements AnnoyingCommand {
                 new SwapManager(plugin).swapPlayers(player, target);
             }
         }.runTaskLater(plugin, 100);
-    }
-
-    public enum SwapCooldown implements AnnoyingCooldown.CooldownType {
-        SWAP;
-
-        @Override
-        public long getDuration() {
-            return 1800000L;
-        }
     }
 }
