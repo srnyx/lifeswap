@@ -10,7 +10,7 @@ import xyz.srnyx.lifeswap.LifeSwap;
 import xyz.srnyx.lifeswap.SwapManager;
 
 
-public class ResetCommand implements AnnoyingCommand {
+public class ResetCommand extends AnnoyingCommand {
     @NotNull private final LifeSwap plugin;
 
     public ResetCommand(@NotNull LifeSwap plugin) {

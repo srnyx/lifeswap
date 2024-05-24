@@ -14,7 +14,7 @@ import xyz.srnyx.lifeswap.SwapManager;
 import java.util.UUID;
 
 
-public class PlayerListener implements AnnoyingListener {
+public class PlayerListener extends AnnoyingListener {
     @NotNull private final LifeSwap plugin;
 
     public PlayerListener(@NotNull LifeSwap plugin) {

@@ -18,8 +18,8 @@ import xyz.srnyx.lifeswap.SwapManager;
 import java.util.function.Predicate;
 
 
-public class SwapCommand implements AnnoyingCommand {
-    @NotNull private static final AnnoyingCooldown.CooldownType COOLDOWN = () -> 1800000L;
+public class SwapCommand extends AnnoyingCommand {
+    @NotNull private static final CooldownType COOLDOWN = () -> 1800000L;
 
     @NotNull private final LifeSwap plugin;
 
@@ -57,6 +57,8 @@ public class SwapCommand implements AnnoyingCommand {
             return;
         }
         final Player player = sender.getPlayer();
+        final UUID playerUuid = player.getUniqueId();
+        final UUID targetUuid = target.getUniqueId();
 
         // Player/target already swapping
         if (plugin.swapManager.swap.containsKey(player.getUniqueId()) || plugin.swapManager.swap.containsKey(target.getUniqueId())) {
@@ -65,7 +67,7 @@ public class SwapCommand implements AnnoyingCommand {
         }
 
         // Player cooldown
-        final AnnoyingCooldown playerCooldown = new AnnoyingCooldown(plugin, player.getUniqueId(), COOLDOWN);
+        final AnnoyingCooldown playerCooldown = new AnnoyingCooldown(plugin, playerUuid.toString(), COOLDOWN);
         if (playerCooldown.isOnCooldown()) {
             new AnnoyingMessage(plugin, "swap.command.cooldown")
                     .replace("%cooldown%", playerCooldown.getRemaining(), DefaultReplaceType.TIME)
@@ -74,13 +76,17 @@ public class SwapCommand implements AnnoyingCommand {
         }
 
         // Target cooldown
-        final AnnoyingCooldown targetCooldown = new AnnoyingCooldown(plugin, target.getUniqueId(), COOLDOWN);
+        final AnnoyingCooldown targetCooldown = new AnnoyingCooldown(plugin, targetUuid.toString(), COOLDOWN);
         if (targetCooldown.isOnCooldown()) {
             new AnnoyingMessage(plugin, "swap.command.cooldown")
                     .replace("%cooldown%", targetCooldown.getRemaining(), DefaultReplaceType.TIME)
                     .send(sender);
             return;
         }
+
+        // Start cooldowns
+        playerCooldown.start();
+        targetCooldown.start();
 
         // Messages
         new AnnoyingMessage(plugin, "swap.command.success")
@@ -89,10 +95,6 @@ public class SwapCommand implements AnnoyingCommand {
         new AnnoyingMessage(plugin, "swap.command.success")
                 .replace("%player%", player.getName())
                 .send(target);
-
-        // Start cooldowns
-        playerCooldown.start();
-        targetCooldown.start();
 
         // Swap
         new BukkitRunnable() {
