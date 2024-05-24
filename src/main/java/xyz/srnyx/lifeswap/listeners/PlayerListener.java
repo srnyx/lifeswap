@@ -9,7 +9,6 @@ import org.jetbrains.annotations.NotNull;
 import xyz.srnyx.annoyingapi.AnnoyingListener;
 
 import xyz.srnyx.lifeswap.LifeSwap;
-import xyz.srnyx.lifeswap.SwapManager;
 
 import java.util.UUID;
 
@@ -30,6 +29,6 @@ public class PlayerListener extends AnnoyingListener {
     public void onDeath(@NotNull PlayerDeathEvent event) {
         final Player player = event.getEntity();
         final UUID uuid = player.getUniqueId();
-        if (plugin.swapManager.swap.containsKey(uuid) || plugin.swapManager.swap.containsValue(uuid)) new SwapManager(plugin).modifyHealth(player, -2);
+        if (plugin.swap.containsKey(uuid) || plugin.swap.containsValue(uuid)) plugin.modifyHealth(player, -2);
     }
 }

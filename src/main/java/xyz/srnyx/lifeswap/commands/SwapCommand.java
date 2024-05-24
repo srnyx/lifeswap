@@ -6,15 +6,16 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import org.jetbrains.annotations.NotNull;
 
-import xyz.srnyx.annoyingapi.AnnoyingCooldown;
 import xyz.srnyx.annoyingapi.command.AnnoyingCommand;
 import xyz.srnyx.annoyingapi.command.AnnoyingSender;
+import xyz.srnyx.annoyingapi.cooldown.AnnoyingCooldown;
+import xyz.srnyx.annoyingapi.cooldown.CooldownType;
 import xyz.srnyx.annoyingapi.message.AnnoyingMessage;
 import xyz.srnyx.annoyingapi.message.DefaultReplaceType;
 
 import xyz.srnyx.lifeswap.LifeSwap;
-import xyz.srnyx.lifeswap.SwapManager;
 
+import java.util.UUID;
 import java.util.function.Predicate;
 
 
@@ -61,7 +62,7 @@ public class SwapCommand extends AnnoyingCommand {
         final UUID targetUuid = target.getUniqueId();
 
         // Player/target already swapping
-        if (plugin.swapManager.swap.containsKey(player.getUniqueId()) || plugin.swapManager.swap.containsKey(target.getUniqueId())) {
+        if (plugin.swap.containsKey(playerUuid) || plugin.swap.containsKey(targetUuid)) {
             new AnnoyingMessage(plugin, "swap.command.already-in").send(sender);
             return;
         }
@@ -99,8 +100,8 @@ public class SwapCommand extends AnnoyingCommand {
         // Swap
         new BukkitRunnable() {
             public void run() {
-                new SwapManager(plugin).swapPlayers(player, target);
+                plugin.swapPlayers(player, target);
             }
-        }.runTaskLater(plugin, 100);
+        }.runTaskLater(plugin, plugin.config.interval.getInterval());
     }
 }

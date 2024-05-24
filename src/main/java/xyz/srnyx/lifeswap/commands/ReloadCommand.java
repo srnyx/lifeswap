@@ -9,10 +9,10 @@ import xyz.srnyx.annoyingapi.message.AnnoyingMessage;
 import xyz.srnyx.lifeswap.LifeSwap;
 
 
-public class ResetCommand extends AnnoyingCommand {
+public class ReloadCommand extends AnnoyingCommand {
     @NotNull private final LifeSwap plugin;
 
-    public ResetCommand(@NotNull LifeSwap plugin) {
+    public ReloadCommand(@NotNull LifeSwap plugin) {
         this.plugin = plugin;
     }
 
@@ -22,13 +22,18 @@ public class ResetCommand extends AnnoyingCommand {
     }
 
     @Override @NotNull
+    public String getName() {
+        return "lifeswapreload";
+    }
+
+    @Override @NotNull
     public String getPermission() {
-        return "lifeswap.reset";
+        return "lifeswap.reload";
     }
 
     @Override
     public void onCommand(@NotNull AnnoyingSender sender) {
-        plugin.reset();
-        new AnnoyingMessage(plugin, "reset").send(sender);
+        plugin.reloadPlugin();
+        new AnnoyingMessage(plugin, "reload").send(sender);
     }
 }

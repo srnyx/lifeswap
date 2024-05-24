@@ -37,7 +37,7 @@ error:
   # Command is used when it's disabled
   disabled-command: "%prefix%%se%%command%%pe% is disabled!@@%pe%%command%@@%command%"
 
-test: "%prefix%This is a test message!"
+reload: "%prefix%Reloaded the plugin!"
 
 reset: "%prefix%&aReset the game!"
 

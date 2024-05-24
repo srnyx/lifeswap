@@ -1,0 +1,5 @@
+# Options for the interval between swaps (in seconds)
+# If you want a fixed interval, set min and max to the same value
+interval:
+  min: 10 # seconds
+  max: 30 # seconds

@@ -9,6 +9,13 @@ version: ${version}
 api-version: 1.13
 
 commands:
+  lifeswapreload:
+    description: Command for reloading the plugin
+    aliases:
+      - lifereload
+      - swapreload
+      - lsreload
+    permission: lifeswap.reload
   reset:
     description: Command for resetting all players
     permission: lifeswap.reset
@@ -17,6 +24,8 @@ commands:
     permission: lifeswap.swap
 
 permissions:
+  lifeswap.reload:
+    description: Allows you to use /lifeswapreload
   lifeswap.reset:
     description: Allows you to use /reset
   lifeswap.swap:
