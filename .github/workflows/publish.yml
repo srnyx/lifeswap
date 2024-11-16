@@ -12,3 +12,5 @@ jobs:
       modrinth: KX9guorr
       curseforge: 896916
     secrets: inherit
+    permissions:
+      contents: write
