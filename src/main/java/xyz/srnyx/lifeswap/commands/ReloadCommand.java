@@ -34,6 +34,6 @@ public class ReloadCommand extends AnnoyingCommand {
     @Override
     public void onCommand(@NotNull AnnoyingSender sender) {
         plugin.reloadPlugin();
-        new AnnoyingMessage(plugin, "reload").send(sender);
+        new AnnoyingMessage(plugin, "command.reload").send(sender);
     }
 }

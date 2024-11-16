@@ -1,5 +1,31 @@
-# Options for the interval between swaps (in seconds)
-# If you want a fixed interval, set min and max to the same value
-interval:
+DOCUMENTATION: https://annoying-api.srnyx.com/wiki/file-objects
+
+
+# Options for the delay between swaps (in seconds)
+# If you want a fixed delay, set min and max to the same value
+delay:
   min: 10 # seconds
   max: 30 # seconds
+
+# The amount of health to transfer from the person who died to the other player (1 = half a heart, 2 = one heart, etc...)
+health-transfer: 2
+
+# The commands to run when a swap ends due to a player losing
+# %winner% - The player who won
+# %loser% - The player who lost
+commands:
+  - "gamemode spectator %loser%"
+
+# Options for the countdown when a swap is about to happen
+countdown:
+  start-at: 5 # seconds
+
+  sound: # SOUND
+    # Whether to play a sound when the countdown starts
+    enabled: true
+    sound: UI_BUTTON_CLICK
+    pitch: 2.0
+
+# Whether to broadcast all game notifications to uninvolved players
+# If false, only the end message is broadcasted
+broadcast: true

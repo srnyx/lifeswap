@@ -37,22 +37,31 @@ error:
   # Command is used when it's disabled
   disabled-command: "%prefix%%se%%command%%pe% is disabled!@@%pe%%command%@@%command%"
 
-reload: "%prefix%Reloaded the plugin!"
+command:
+  reload: "%prefix%Reloaded the plugin!"
 
-reset: "%prefix%&aReset the game!"
+  stop:
+    all: "%prefix%Stopped all games!"
+    one: "%prefix%Stopped the game between %s%%player1%%p% and %s%%player2%%p%!" # %player1%, %player2%
 
-health: "%prefix%%color1%Your max health is now %color2%%health%%color1%/20!"
+  already-swapping: "%prefix%%pe%You/they are already in a swap!@@%pe%%command%@@%command%"
 
-swap:
-  command:
-    already-in: "%prefix%%pe%You/they are already in a swap!@@%pe%%command%@@%command%"
-    cooldown: "%prefix%%pe%You/they can't swap for another %se%%cooldown==m%%pe% minutes!@@%pe%%command%@@%command%" # %cooldown==time%
-    success: "%s%&l! %p%Swapping with %s%%player%%p% in %s%5%p% seconds %s%&l!" # %player%
+game:
+  start: "\n%s%&l! %p%Swapping with %s%%player%%p% in %s%%time==s%%p% seconds %s%&l!\n" # %player%, %time==time%
+  end: "\n&c&l! &4%loser%&c has lost a swap game against &4%winner% &c&l!\n" # %winner%, %loser%
+
+on-swap:
   title: "%p%SWAPPED!"
-  message:
-    involved: "%prefix%%p%&lSWAPPED!"
-    others: "%prefix%%s%%player%%p% swapped with %s%%target%" # %player%, %target%
+  message: "%p%&lSWAPPED!"
 
-death:
-  ban: "%p%You died!"
-  broadcast: "%prefix%%s%%player%%p% has died and been banned!" # %player%
+  # Only applicable if broadcast is true in config.yml
+  broadcast: "%s%%player1%%p% swapped with %s%%player2%%p%!" # %player1%, %player2%
+
+countdown: "&c%time==s%" # %time==time%
+
+health: # %health==number%
+  gain: "&aYour max health is now &2%health%&a/20!"
+  lose: "&cYour max health is now &4%health%&c/20!"
+
+  # Only applicable if broadcast is true in config.yml
+  broadcast: "&4%gainer%&c has taken &4%health%&c health from &4%loser%&c!" # %gainer%, %loser%

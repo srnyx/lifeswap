@@ -1,8 +1,10 @@
 # LifeSwap
 
-Death swap except when you die it takes a heart from max health. *Made for [mothlet](https://youtube.com/channel/UCXJe1zf6xUxcTjjBwQK068w), go check them out!*
+Death swap except when you die, your opponent steals health from you. *Originally made for [mothlet](https://youtube.com/channel/UCXJe1zf6xUxcTjjBwQK068w).*
 
-Upon swapping (5 seconds after running the swap command), there'll be a 30-second timer, when the timer ends, it'll detect if someone died. If someone did, that player's max health will be lowered, you can continue swapping until one player has no more max health left.
+When someone dies, their opponent will steal a configurable amount of health from them. The game continues until someone reaches 0 health.
+
+Multiple games can be running at once.
 
 **🐛 Bugs / 💡 Suggestions:** Please [open an issue](https://github.com/srnyx/lifeswap/issues/new/choose) to report a bug or suggest an idea
 

@@ -8,5 +8,5 @@ plugins {
     id("com.gradleup.shadow") version "8.3.5"
 }
 
-setupAnnoyingAPI("723fb94dbb", "xyz.srnyx", "2.0.0", "A combination of LifeSteal and Death Swap")
+setupAnnoyingAPI("5.1.3", "xyz.srnyx", "3.0.0", "A combination of LifeSteal and Death Swap")
 spigotAPI("1.8.8")
